@@ -14,12 +14,13 @@ FRAME_STEP = 100
 DUST_FRAME_STEP = 500
 VIDEO_URL = "http://localhost:8000/stream.mjpg"
 UNET_MODEL_PATH = "Weights/sm_unet4_03.hdf5"
-USE_YOLO = False
+USE_YOLO = True
 USE_UNET = False
 
 
 if __name__ == '__main__':
     if USE_YOLO:
+        from Cv2Drawer import box_drawer
         from YoloModel import Yolo5
         YOLO_MODEL_PATH = "Weights/yoloSolar.pt"
         yolo5 = Yolo5(YOLO_MODEL_PATH)
@@ -52,8 +53,12 @@ if __name__ == '__main__':
                 if num_frame == FRAME_STEP:
                     # Indaga si hay panel
                     if USE_YOLO:
-                        results = yolo5.get_image_markers_over_confidence(image, 0.7)
+                        results = yolo5.get_image_markers_over_confidence(image, 0.3)
                         print(results)
+                        if results:
+                            box = results.pop()
+                            box_drawer(image, **box)
+                            cv2.imshow('cajas', image)
                     else:
                         results = get_panel(image, True)
                     num_frame = 1
