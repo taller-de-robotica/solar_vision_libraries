@@ -1,20 +1,26 @@
 # pip3 install pandas
+#
 # pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
 # ó si hay GPUs elegir comando en:
 # https://pytorch.org/get-started/locally/
+# Ej:
+# pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+#
+# pip3 install segmentation_models
+# pip3 install termcolor
+# pip3 install patchify
+# pip3 install tensorflow
 
 import cv2
 import urllib.request
 import numpy as np
 
-from PolyDustNet import Unet_Model
-
 
 FRAME_STEP = 100
 DUST_FRAME_STEP = 500
-VIDEO_URL = "http://localhost:8000/stream.mjpg"
+VIDEO_URL = "http://10.10.120.5:8000/stream.mjpg"
 UNET_MODEL_PATH = "Weights/sm_unet4_03.hdf5"
-USE_YOLO = True
+USE_YOLO = False
 USE_UNET = False
 
 
@@ -28,6 +34,7 @@ if __name__ == '__main__':
         from Cv2Detector import get_panel
 
     if USE_UNET:
+        from PolyDustNet import Unet_Model
         unet = Unet_Model(UNET_MODEL_PATH)
 
 
