@@ -1,3 +1,6 @@
 **/sm_unet4_03.hdf5 
 __pycache__/
-
+decode/*
+videos/*
+data/*
+labels/*
